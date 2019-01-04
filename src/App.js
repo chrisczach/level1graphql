@@ -1,28 +1,42 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import ApolloClient from 'apollo-boost';
+import { ApolloProvider } from 'react-apollo';
+import gql from 'graphql-tag';
+import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
+
 import './App.css';
+import Post from './Post/Post';
+import Posts from './Post/Posts';
+
+const client = new ApolloClient({
+  uri: 'https://api-uswest.graphcms.com/v1/cjqhda5rg0fcw01exqz6n6bsu/master'
+});
+
+
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <ApolloProvider client={client}>
+        <Router>
+          <Switch>
+            <Route path="/post/:id" component={Post} />
+            <Route exact path="/" component={Posts} />
+          </Switch>
+        </Router>
+
+
+
+        
+      </ApolloProvider>
     );
   }
 }
 
 export default App;
+
+// client
+//   .query({
+//     query: POST_QUERY
+//   })
+//   .then(res => console.log(res));
