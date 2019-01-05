@@ -7,27 +7,27 @@ import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import './App.css';
 import Post from './Post/Post';
 import Posts from './Post/Posts';
+import NewPost from './Post/NewPost';
 
 const client = new ApolloClient({
   uri: 'https://api-uswest.graphcms.com/v1/cjqhda5rg0fcw01exqz6n6bsu/master'
 });
-
-
 
 class App extends Component {
   render() {
     return (
       <ApolloProvider client={client}>
         <Router>
-          <Switch>
-            <Route path="/post/:id" component={Post} />
-            <Route exact path="/" component={Posts} />
-          </Switch>
+          <>
+            <Link to={'/'}>Home</Link>
+            <Link to={'/post/new'}>New Post</Link>
+            <Switch>
+              <Route exact path="/" component={Posts} />
+              <Route exact path="/post/new" component={NewPost} />
+              <Route path="/post/:id" component={Post} />
+            </Switch>
+          </>
         </Router>
-
-
-
-        
       </ApolloProvider>
     );
   }
